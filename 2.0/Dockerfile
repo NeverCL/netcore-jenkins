@@ -25,11 +25,11 @@ RUN apt-get install \
      ca-certificates \
      curl \
      gnupg2 \
-     software-properties-common -y
-&& curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg | apt-key add -
+     software-properties-common -y \
+&& curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg | apt-key add - \
 && add-apt-repository \
    "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \
    $(lsb_release -cs) \
-   stable"
-&& apt-get update
+   stable" \
+&& apt-get update \
 && apt-get install docker-ce -y
