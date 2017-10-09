@@ -1,13 +1,12 @@
-# 基于jenkins
 FROM jenkins
 USER root
 
 # 将 shell 替换为 bash
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
-# 设置中科大软件镜像源
-RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
-RUN sed -i 's|security.debian.org|mirrors.ustc.edu.cn/debian-security|g' /etc/apt/sources.list
+# 设置为阿里云镜像源
+RUN echo -e "deb http://mirrors.aliyun.com/debian stretch main contrib non-free\ndeb-src http://mirrors.aliyun.com/debian stretch main contrib non-free\ndeb http://mirrors.aliyun.com/debian stretch-updates main contrib non-free\ndeb-src http://mirrors.aliyun.com/debian stretch-updates main contrib non-free\ndeb http://mirrors.aliyun.com/debian-security stretch/updates main contrib non-free\ndeb-src http://mirrors.aliyun.com/debian-security stretch/updates main contrib non-free" > /etc/apt/sources.list
+
 # upgrade
 RUN apt-get update && apt-get upgrade -y
 
@@ -19,7 +18,7 @@ RUN apt-get install curl libunwind8 gettext apt-transport-https -y \
 && apt-get update \
 && apt-get install dotnet-sdk-2.0.0 -y
 
-# 安装 docker
+# debian安装docker
 RUN apt-get install \
      apt-transport-https \
      ca-certificates \
